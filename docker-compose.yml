@@ -1,0 +1,18 @@
+services:
+  alert-console:
+    build: .
+    container_name: es-alert-console
+    ports:
+      - "8080:8080"
+    environment:
+      # Passe DEMO_MODE à false pour interroger ton vrai cluster Elasticsearch
+      - DEMO_MODE=true
+      - ES_URL=https://ton-cluster-elastic:9200
+      # Option 1 (Recommandée) : Clé API encodée en Base64 avec allow_restricted_indices
+      - ES_API_KEY=VOTRE_CHAMP_ENCODED_ICI
+      # Option 2 (Alternative) : Authentification Basic
+      # - ES_USERNAME=elastic
+      # - ES_PASSWORD=changeme
+      # Ignore les certificats TLS auto-signés en interne
+      - ES_INSECURE_TLS=true
+    restart: unless-stopped
